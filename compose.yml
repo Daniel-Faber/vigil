@@ -1,0 +1,50 @@
+services:
+
+  app-1:
+    image: api-gateway-image
+    networks:
+      - default
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - DISABLE_OTEL_LOGGING=true
+    entrypoint:
+      - uvicorn
+      - main:app
+      - --host=0.0.0.0
+      - --port=8000
+      - --reload
+
+  app-2:
+    image: api-gateway-image
+    networks:
+      - default
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - DISABLE_OTEL_LOGGING=true
+    entrypoint:
+      - uvicorn
+      - main:app
+      - --host=0.0.0.0
+      - --port=8001
+      - --reload
+
+
+  vigil:
+    image: valeriansaliou/vigil:v1.27.0
+    networks:
+      - default
+    depends_on:
+      - app-1
+      - app-2
+    ports:
+      - "8080:8080"
+    # environment:
+    #   - RUST_BACKTRACE=full
+    volumes:
+      - ./config.cfg:/etc/vigil.cfg
