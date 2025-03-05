@@ -13,7 +13,7 @@ export DOCKER_BUILDKIT=1
 # -----------------------------------
 
 start:
-	docker run -p 8080:8080 -v c://vigil/config.cfg:/etc/vigil.cfg valeriansaliou/vigil:v1.27.0
+	docker run -p 8080:8080 -v c://vigil/vigil-config.cfg:/etc/vigil.cfg valeriansaliou/vigil:v1.27.0
 
 start-compose:
 	docker compose up

@@ -47,4 +47,4 @@ services:
     # environment:
     #   - RUST_BACKTRACE=full
     volumes:
-      - ./config.cfg:/etc/vigil.cfg
+      - ./vigil-config.cfg:/etc/vigil.cfg
